@@ -1,6 +1,8 @@
 import React, { Component } from "react";
-import { FeedbackListContainer } from "./Components/Feedback/FeedbackListStyled";
-import PropTypes from "prop-types";
+import Section from "./Components/section/Section";
+import FeedbackOptions from "./Components/feedback/FeedbackOptions";
+import Statistics from "./Components/statistics/Statistics";
+import Notification from "./Components/notification/Notification";
 
 class App extends Component {
   state = { good: 0, neutral: 0, bad: 0 };
@@ -21,47 +23,38 @@ class App extends Component {
     return Math.round((good / total) * 100);
   };
 
+  emptyData = () => {
+    if (
+      this.state.good === 0 &&
+      this.state.neutral === 0 &&
+      this.state.bad === 0
+    ) {
+      return true;
+    } else {
+      return false;
+    }
+  };
+
   render() {
     return (
       <>
-        <FeedbackListContainer className="main-container">
-          <h1 className="feedback-title">Please leave feedback</h1>
-          <li className="feedback-buttons-container">
-            {Object.keys(this.state).map((key) => (
-              <button
-                key={key}
-                type="button"
-                className="btn"
-                name={key}
-                onClick={this.onLeaveFeedback}
-              >
-                {key.toUpperCase()}
-              </button>
-            ))}
-          </li>
-          <h2 className="statistics-title">Statistics</h2>
-          <ul className="statistics-list">
-            {Object.keys(this.state).map((key) => (
-              <li className="statistics-item">
-                <p className="statistics-good">{key.toUpperCase()}</p>
-                <span className="statistics-good-value">{this.state[key]}</span>
-              </li>
-            ))}
-
-            <li className="statistics-item">
-              <p className="statistics-total">Total:</p>
-              <span className="statistics-total-value">
-                {this.countTotalFeedback()}
-              </span>
-            </li>
-            <li className="statistics-item">
-              <p className="statistics-positive">Positive feedback:</p>
-              <span className="statistics-positive-value">
-                {this.countPositiveFeedbackPercentage()}%
-              </span>
-            </li>
-          </ul>
-        </FeedbackListContainer>
+        <Section>
+          <FeedbackOptions
+            options={this.state}
+            onLeaveFeedback={this.onLeaveFeedback}
+          />
+          {this.emptyData() ? (
+            <Notification message="No feedback given" />
+          ) : (
+            <Statistics
+              options={this.state}
+              countTotalFeedback={this.countTotalFeedback}
+              countPositiveFeedbackPercentage={
+                this.countPositiveFeedbackPercentage
+              }
+            />
+          )}
+        </Section>
       </>
     );
   }
