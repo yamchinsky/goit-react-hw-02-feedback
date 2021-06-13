@@ -24,25 +24,18 @@ class App extends Component {
   };
 
   emptyData = () => {
-    if (
-      this.state.good === 0 &&
-      this.state.neutral === 0 &&
-      this.state.bad === 0
-    ) {
-      return true;
-    } else {
-      return false;
-    }
+    return !this.countTotalFeedback();
   };
 
   render() {
     return (
       <>
-        <Section>
+        <Section title={"Please leave feedback"}>
           <FeedbackOptions
             options={this.state}
             onLeaveFeedback={this.onLeaveFeedback}
           />
+          <h2 className="statistics-title">Statistics</h2>
           {this.emptyData() ? (
             <Notification message="No feedback given" />
           ) : (

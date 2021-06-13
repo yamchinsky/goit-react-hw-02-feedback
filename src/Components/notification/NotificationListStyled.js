@@ -1,6 +1,6 @@
 import styled from "styled-components";
 
-export const NotificationListContainer = styled.h2`
+export const NotificationListContainer = styled.h3`
   .notification {
     font-size: 30px;
     text-align: center;

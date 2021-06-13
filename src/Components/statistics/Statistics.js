@@ -9,7 +9,6 @@ const Statistics = ({
 }) => {
   return (
     <StatisticListContainer className="statistics-list">
-      <h2 className="statistics-title">Statistics</h2>
       {Object.keys(options).map((key, index) => (
         <li className="statistics-item" key={index}>
           <p className="statistics-names">{key.toUpperCase()}</p>
